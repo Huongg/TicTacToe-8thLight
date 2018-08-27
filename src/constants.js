@@ -1,4 +1,6 @@
 
+const X= 'X';
+const O= 'O';
 
 const patterns_O= [
               [(/ OO....../),0],
@@ -78,6 +80,8 @@ const patterns_winning= [
               [(/..X.X.X../),'X']
             ]
 
+module.exports.X = X;
+module.exports.O = O;
 module.exports.patterns_O = patterns_O;
 module.exports.patterns_X = patterns_X;
 module.exports.patterns_winning = patterns_winning;
