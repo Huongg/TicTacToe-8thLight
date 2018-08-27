@@ -1,0 +1,73 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.board-row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.square {
+	background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 100px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 100px;
+}
+
+
+.square:focus {
+ 	outline: none;
+}
+
+.drop-down {
+	padding: 0;
+    display: flex;
+    list-style-type: none;
+}
+
+.drop-down li {
+    position: relative;
+}
+
+.drop-down ul {
+      display: none;
+      width: 100%;
+      position: absolute;
+      list-style-type: none;
+}
+      
+/*      ul {
+        left: 100%;
+        top: 0;
+        
+        li {
+          width: 92.5%;
+          
+          li {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    &:hover {
+      > ul {
+        display: block;
+      }
+    }
+  }
+}
+*/
