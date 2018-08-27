@@ -32,17 +32,6 @@ show= function(board){
 }
 
 
-checking_valid_input= function(input, gameIsStarted){
-  // using regex to double check again make sure the number is from 0-8
-  if(gameIsStarted){
-    const regex = /\b[0-8]\b/;
-    return regex.exec(input);
-  } else {
-     const regex = /O|X/g;
-    return regex.exec(input);
-  }  
-}
-
 play= function(){
   let game = new TicTacToe(); 
   console.log("Please pick your symbol (X or O):");
@@ -52,7 +41,7 @@ play= function(){
     if(!game.isStarted){
         const inputSymbol = val.toString()[0].toUpperCase();     
         if(inputSymbol !== undefined && 
-            (checking_valid_input(inputSymbol, game.isStarted) !== null)) {
+            (game.checking_valid_input(inputSymbol, game.isStarted) !== null)) {
 
           game.isStarted = true; 
           console.log(`User has picked: ${inputSymbol}`);
@@ -72,7 +61,7 @@ play= function(){
       let position = +val; 
       game.currentUserPosition = position;
 
-      if(checking_valid_input(game.currentUserPosition, game.isStarted) !== null) {
+      if(game.checking_valid_input(game.currentUserPosition, game.isStarted) !== null) {
         game.move(game.currentUserPosition, game.userSymbol);
         console.log(`current turn is: ${game.userSymbol}`);
 

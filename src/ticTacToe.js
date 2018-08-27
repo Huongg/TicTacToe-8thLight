@@ -49,6 +49,17 @@ class TicTacToe {
 		this._computerSymbol = (this._userSymbol === constants.X)? constants.O : constants.X;;
 	}
 
+
+	checking_valid_input(input, gameIsStarted){
+	  // using regex to double check again make sure the number is from 0-8
+	  if(this._isStarted){
+	    const regex = /\b[0-8]\b/;
+	    return regex.exec(input);
+	  } else {
+	     const regex = /O|X/g;
+	    return regex.exec(input);
+	  }  
+	}
 	// computer move
 	comp(computerSymbol){
 	  // changed the name "x" to computerMove
@@ -146,6 +157,9 @@ class TicTacToe {
 	}
 
 
+
+
 }
 
 module.exports.TicTacToe = TicTacToe;
+
