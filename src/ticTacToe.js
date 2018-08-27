@@ -8,6 +8,7 @@ class TicTacToe {
 		this._computerSymbol = null;
 		this._currentUserPosition = null;
 		this._board= [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+		this._emptyPosition = [];
 	}
 
 	get computerSymbol() {
@@ -43,7 +44,7 @@ class TicTacToe {
 
 
 
-	initialiseSymbols(symbol) {
+	initialise_symbols(symbol) {
 		this._isStarted = true;
 		this._userSymbol = symbol;	
 		this._computerSymbol = (this._userSymbol === constants.X)? constants.O : constants.X;;
@@ -53,13 +54,31 @@ class TicTacToe {
 	checking_valid_input(input, gameIsStarted){
 	  // using regex to double check again make sure the number is from 0-8
 	  if(this._isStarted){
-	    const regex = /\b[0-8]\b/;
-	    return regex.exec(input);
+		    const regex = /\b[0-8]\b/;
+		    if(regex.exec(input) !== null && this._board[input] == ' ') {
+		    	return true;
+		    }
+	    
 	  } else {
-	     const regex = /O|X/g;
-	    return regex.exec(input);
+	    	const regex = /O|X/g;
+	     	if(regex.exec(input) !== null){
+	     		return true;
+	     	}
+	    
 	  }  
 	}
+
+	checking_empty_position(currentBoard) {
+		let emptyPosition = [];
+		for (let i=0 ; i<currentBoard.length; i++) {
+			if(currentBoard[i] == ' ') {
+				emptyPosition.push(i);
+			}
+		}
+		return emptyPosition;
+	}
+
+
 	// computer move
 	comp(computerSymbol){
 	  // changed the name "x" to computerMove

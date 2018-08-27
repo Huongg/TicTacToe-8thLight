@@ -20,6 +20,23 @@ board_display= function(board){
 }
 
 
+checking_valid_input= function(input, gameIsStarted, currentBoard){
+    // using regex to double check again make sure the number is from 0-8
+    if(gameIsStarted){
+        const regex = /\b[0-8]\b/;
+        if(regex.exec(input) !== null && currentBoard[input] == ' ') {
+          return true;
+        }
+      
+    } else {
+        const regex = /O|X/g;
+        if(regex.exec(input) !== null){
+          return true;
+        }
+      
+    }  
+  }
+
 
 exit= function(){
   process.exit();
@@ -40,13 +57,12 @@ play= function(){
     
     if(!game.isStarted){
         const inputSymbol = val.toString()[0].toUpperCase();     
-        if(inputSymbol !== undefined && 
-            (game.checking_valid_input(inputSymbol, game.isStarted) !== null)) {
+        if(inputSymbol !== undefined && checking_valid_input(inputSymbol, game.isStarted, game.board)) {
 
           game.isStarted = true; 
           console.log(`User has picked: ${inputSymbol}`);
 
-          game.initialiseSymbols(inputSymbol);
+          game.initialise_symbols(inputSymbol);
           show(game.board);
           console.log("Enter [0-8]:");
 
@@ -61,7 +77,7 @@ play= function(){
       let position = +val; 
       game.currentUserPosition = position;
 
-      if(game.checking_valid_input(game.currentUserPosition, game.isStarted) !== null) {
+      if(checking_valid_input(game.currentUserPosition, game.isStarted, game.board)) {
         game.move(game.currentUserPosition, game.userSymbol);
         console.log(`current turn is: ${game.userSymbol}`);
 
@@ -82,10 +98,11 @@ play= function(){
             exit();
           } else {
             show(game.board);
+            console.log(`The current available positions are: ${game.checking_empty_position(game.board)}`);
           }
         }
       } else {
-        console.log("Invalid input, please re-enter number from 0-8");
+        console.log(`Invalid input, please re-enter number as listed: ${game.checking_empty_position(game.board)}`);
       }
 
     }
