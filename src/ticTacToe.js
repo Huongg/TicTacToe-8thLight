@@ -3,7 +3,8 @@ const constants = require("./constants.js");
 
 class TicTacToe {
 	constructor() {
-		this._isStarted = false;
+		// this._isStarted = false;
+		this._gameState = 0;
 		this._userSymbol = null;
 		this._computerSymbol = null;
 		this._currentUserPosition = null;
@@ -42,31 +43,27 @@ class TicTacToe {
 		return this._board;
 	}
 
+	get gameState() {
+		return this._gameState;
+	}
+
+	set gameState(gameState) {
+		this._gameState = gameState;
+	}
+
+	incrementGameState() {
+		return this._gameState +=1;
+	}
 
 
-	initialise_symbols(symbol) {
+
+
+	initialise_symbols(userSymbol) {
 		this._isStarted = true;
-		this._userSymbol = symbol;	
+		this._userSymbol = userSymbol;	
 		this._computerSymbol = (this._userSymbol === constants.X)? constants.O : constants.X;;
 	}
 
-
-	checking_valid_input(input, gameIsStarted){
-	  // using regex to double check again make sure the number is from 0-8
-	  if(this._isStarted){
-		    const regex = /\b[0-8]\b/;
-		    if(regex.exec(input) !== null && this._board[input] == ' ') {
-		    	return true;
-		    }
-	    
-	  } else {
-	    	const regex = /O|X/g;
-	     	if(regex.exec(input) !== null){
-	     		return true;
-	     	}
-	    
-	  }  
-	}
 
 	checking_empty_position(currentBoard) {
 		let emptyPosition = [];
