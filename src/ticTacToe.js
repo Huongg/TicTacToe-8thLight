@@ -5,19 +5,15 @@ class TicTacToe {
 	constructor() {
 		// this._isStarted = false;
 		this._gameState = 0;
-		this._userSymbol = null;
+		this._playerSymbol = null;
 		this._computerSymbol = null;
 		this._currentUserPosition = null;
 		this._board= [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 		this._emptyPosition = [];
 	}
 
-	get computerSymbol() {
-		return this._computerSymbol;
-	}
-
-	get userSymbol() {
-		return this._userSymbol;
+	get board() {
+		return this._board;
 	}
 
 	get isStarted() {
@@ -39,29 +35,30 @@ class TicTacToe {
 		return this._currentUserPosition;
 	}
 
-	get board() {
-		return this._board;
-	}
+	
 
+	/** Set and Get for gameState */
 	get gameState() {
 		return this._gameState;
 	}
-
 	set gameState(gameState) {
 		this._gameState = gameState;
 	}
-
 	incrementGameState() {
 		return this._gameState +=1;
 	}
 
-
-
-
-	initialise_symbols(userSymbol) {
-		this._isStarted = true;
-		this._userSymbol = userSymbol;	
-		this._computerSymbol = (this._userSymbol === constants.X)? constants.O : constants.X;;
+	/** Initialise the symbol for player and computer */
+	get computerSymbol() {
+		return this._computerSymbol;
+	}
+	get playerSymbol() {
+		return this._playerSymbol;
+	}
+	initialise_symbols(playerSymbol) {
+		// this._isStarted = true;
+		this._playerSymbol = playerSymbol;	
+		this._computerSymbol = (this._playerSymbol === constants.X)? constants.O : constants.X;;
 	}
 
 
@@ -76,9 +73,7 @@ class TicTacToe {
 	}
 
 
-	// computer move
 	comp(computerSymbol){
-	  // changed the name "x" to computerMove
 	  let computerMove = this.get_pattern_O_move();
 	  if(computerMove==-1){
 	    computerMove = this.get_pattern_X_move();
@@ -91,23 +86,14 @@ class TicTacToe {
 
 
 	move(pos, currentSymbol){
-	  // + before pos helps turn the pos into integer number
-	  // if pos >=0 and <=8 and is a number and not on the this._board yet
-	  // then go slice the this._board
-
 	  if(pos>=0 && pos<=8 && !isNaN(pos) && this._board[pos]==' '){
 	    this._board.splice(pos, 1, currentSymbol);
-
-	      // if the current turn is X, switch to O, vice versa
 	    return true;
 	  }
-
-	  // if it returns false, should be a message said
-	  // "position is already taken"
 	  return false;
 	}
 
-	// get the move for O based on pattern 1
+	/** Get the move for O based on pattern 1 */
 	get_pattern_O_move(){
 	  	let board_string= this._board.join('')
 	  	for(let i=0 ; i<constants.patterns_O.length ; i++){
@@ -116,14 +102,15 @@ class TicTacToe {
 	      		return constants.patterns_O[i][1];
 	    	}
 	  	}
-
-	  	// return -1 in case the current pattern does not match the patter_1_move
-	  	// this case, current turn is X, it will never get matched with patter_1 which is O
+	  	/**
+      	 * return -1 in case the current pattern does not match the patter_1_move
+      	 * this case, current turn is X, it will never get matched with patter_1 which is O
+       	 */
 	  	return -1;
 	}
 
 
-	// get the move for X (user pattern) based on pattern 2
+	/** Get the move for X (user pattern) based on pattern 2 */
 	get_pattern_X_move(){
 	  	let board_string= this._board.join('')
 	  	for(let i=0 ; i<constants.patterns_X.length ; i++){
@@ -143,18 +130,19 @@ class TicTacToe {
 		return false; 
 	}
 
-	// computer gets move
 	get_available_space_move(){
-
-	  // this is the default value saying that if no one started or taken the middle one
-	  // computer will choose the middle point
-	  if(this._board[4] == ' '){
-	    return 4;
-	  };
-
-	  // this is for when no pattern is found,
-	  // next turn will take the first index value of the empty space
-	  return this._board.indexOf(' ');
+		/**
+      	 * this is the default value saying that if no one started or taken the middle one
+      	 * computer will choose the middle point
+       	 */
+	  	if(this._board[4] == ' '){
+	    	return 4;
+	  	};
+	  	/**
+      	 * this is for when no pattern is found,
+      	 * next turn will take the first index value of the empty space
+       	 */
+	  	return this._board.indexOf(' ');
 	}
 
 	winner(){
