@@ -6,10 +6,14 @@ class TicTacToe {
 		// this._isStarted = false;
 		this._gameState = 0;
 		this._playerSymbol = null;
+		this._playerBSymbol = null;
 		this._computerSymbol = null;
+		this._computerBSymbol = null;
 		this._currentUserPosition = null;
 		this._board= [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 		this._emptyPosition = [];
+
+		this._gameType = null;
 	}
 
 	get board() {
@@ -24,9 +28,15 @@ class TicTacToe {
 
 	}
 
-	set gameType(type) {
+	get gameType() {
+		return this._gameType;
 
 	}
+	set gameType(gameType) {
+		this._gameType = gameType;
+	}
+
+	
 
 	set currentUserPosition(currentPosition) {
 		this._currentUserPosition = currentPosition;
@@ -34,7 +44,6 @@ class TicTacToe {
 	get currentUserPosition() {
 		return this._currentUserPosition;
 	}
-
 	
 
 	/** Set and Get for gameState */
@@ -45,22 +54,48 @@ class TicTacToe {
 		this._gameState = gameState;
 	}
 	incrementGameState() {
-		return this._gameState +=1;
+		if(this._gameType == 1 || this._gameType == 2){
+			return this._gameState += 1;
+		} else if(this._gameType == 3) {
+			return this._gameState = 3;	
+		}		
 	}
+
+
 
 	/** Initialise the symbol for player and computer */
 	get computerSymbol() {
 		return this._computerSymbol;
 	}
+	get computerBSymbol() {
+		return this._computerBSymbol;
+	}
 	get playerSymbol() {
 		return this._playerSymbol;
 	}
-	initialise_symbols(playerSymbol) {
-		// this._isStarted = true;
-		this._playerSymbol = playerSymbol;	
-		this._computerSymbol = (this._playerSymbol === constants.X)? constants.O : constants.X;;
+	get playerBSymbol() {
+		return this._playerBSymbol;
 	}
+	initialise_symbols(firstPlayerSymbol) {
+		/** symbols will be initialised based on the type of the game that player picked
+         * 1. Human vs Computer
+         * 2. Human vs Human
+         * 3. Computer vs Computer
+         */
+		if(this._gameType == 1){
+			this._playerSymbol = firstPlayerSymbol;	
+			this._computerSymbol = (this._playerSymbol === constants.X)? constants.O : constants.X;
 
+		} else if(this._gameType == 2) {
+			this._playerSymbol = firstPlayerSymbol;
+			this._playerBSymbol = (this._playerSymbol === constants.X)? constants.O : constants.X;
+
+		} else if(this._gameType == 3) {
+			this._computerSymbol = constants.X;
+			this._computerBSymbol = constants.O;
+		}
+		
+	}
 
 	checking_empty_position(currentBoard) {
 		let emptyPosition = [];
@@ -81,7 +116,7 @@ class TicTacToe {
 	      computerMove = this.get_available_space_move();
 	    }
 	  }
-	  this.move(computerMove,computerSymbol);
+	  this.move(computerMove, computerSymbol);
 	}
 
 
